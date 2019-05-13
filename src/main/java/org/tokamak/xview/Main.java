@@ -5,12 +5,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
+
+import java.io.File;
 
 public class Main extends Application {
 
@@ -46,7 +49,7 @@ public class Main extends Application {
 
 		//left panel
 		AnchorPane controlPane = new AnchorPane();
-		controlPane.setStyle("-fx-background-color: #546685");
+		//controlPane.setStyle("-fx-background-color: #546685");
 		controlPane.setMinWidth(200);
 
 		Label label = new Label("Channels");
@@ -69,5 +72,25 @@ public class Main extends Application {
 		root.setTop(menuBar);
 		root.setLeft(controlPane);
 		root.setCenter(viewer);
+
+		openItem.setOnAction(e ->{
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Open Tokamak data files");
+			fileChooser.getExtensionFilters().addAll(
+					new FileChooser.ExtensionFilter("Tokamak data", "*.xxx")
+			);
+
+			File selectedFile =  fileChooser.showOpenDialog(primaryStage);
+
+			if(selectedFile != null){
+				loadDataFile(selectedFile);
+			}
+		});
 	}
+
+	private void loadDataFile(File dataFile){
+    	DataFileReader reader = new DataFileReader();
+    	reader.load(dataFile);
+	}
+
 }
