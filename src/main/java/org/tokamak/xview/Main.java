@@ -53,9 +53,12 @@ public class Main extends Application {
 		controlPane.setMinWidth(200);
 
 		Label label = new Label("Channels");
+		AnchorPane.setLeftAnchor(label, 10.0);
 		ListView<String> channelList = new ListView<>();
 		AnchorPane.setTopAnchor(channelList, 20.0);
 		AnchorPane.setBottomAnchor(channelList, 10.0);
+		AnchorPane.setLeftAnchor(channelList, 10.0);
+		AnchorPane.setRightAnchor(channelList, 10.0);
 		controlPane.getChildren().addAll(label, channelList);
 
 		//center
