@@ -1,6 +1,8 @@
 package org.tokamak.xview;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -12,10 +14,15 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.fx.ChartViewer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.tokamak.xview.exception.DataFormException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main extends Application {
+
+	private ListView<String> channelList;
 
     public static void main(String[] args) { 
     	launch(args);
@@ -50,11 +57,11 @@ public class Main extends Application {
 		//left panel
 		AnchorPane controlPane = new AnchorPane();
 		//controlPane.setStyle("-fx-background-color: #546685");
-		controlPane.setMinWidth(200);
+		controlPane.setMinWidth(150);
 
 		Label label = new Label("Channels");
 		AnchorPane.setLeftAnchor(label, 10.0);
-		ListView<String> channelList = new ListView<>();
+		channelList = new ListView<>();
 		AnchorPane.setTopAnchor(channelList, 20.0);
 		AnchorPane.setBottomAnchor(channelList, 10.0);
 		AnchorPane.setLeftAnchor(channelList, 10.0);
@@ -89,10 +96,21 @@ public class Main extends Application {
 				loadDataFile(selectedFile);
 			}
 		});
+
+
 	}
 
 	private void loadDataFile(File dataFile){
-    	DataFile data = new DataFileReader().load(dataFile);
+		try {
+			DataFile data = new DataFileReader().load(dataFile);
+			channelList.setItems(FXCollections.observableArrayList(data.listChannels()));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}catch (DataFormException e){
+			e.printStackTrace();
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 
 	}
 
