@@ -92,8 +92,8 @@ public class Main extends Application {
 	}
 
 	private void loadDataFile(File dataFile){
-    	DataFileReader reader = new DataFileReader();
-    	reader.load(dataFile);
+    	DataFile data = new DataFileReader().load(dataFile);
+
 	}
 
 }

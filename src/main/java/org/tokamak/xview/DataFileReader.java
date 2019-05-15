@@ -6,47 +6,40 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 public class DataFileReader {
 
     public DataFileReader() {
     }
 
-    public void load(File datafile){
+    public DataFile load(File datafile){
+
+        DataFile data = new DataFile();
         try {
             LittleEndianDataInputStream in = new LittleEndianDataInputStream(new FileInputStream(datafile));
 
             //read head
             byte[] sign = new byte[20];
             in.read(sign);
-            String version = new String(sign).substring(10, 16);
-            int headLen = in.readInt();
-            int dataLen = in.readInt();
-            byte dataForm = in.readByte();
-            byte dataType = in.readByte();
-            int shotNumber = in.readInt();
-            int shotDate = in.readInt();
-            int shotTime = in.readInt();
-            short addonLen = in.readShort();
-            byte[] addon = new byte[addonLen];
+            data.setSign(new String(sign));
+            data.setHeadLength(in.readInt());
+            data.setDataLength(in.readInt());
+            data.setDataForm(in.readByte());
+            data.setDataType(in.readByte());
+            data.setShotNumber(in.readInt());
+            data.setShotDate(in.readInt());
+            data.setShotTime(in.readInt());
+
+            byte[] addon = new byte[in.readShort()];
             in.read(addon);
-            short commentLen = in.readShort();
-            byte[] comment = new byte[commentLen];
+            data.setAddon(new String(addon));
+            byte[] comment = new byte[in.readShort()];
             in.read(comment);
+            data.setComment(new String(comment));
 
-            //read channels name
-            String taddon = new String(addon);
-            String[] channels = taddon.substring(49, taddon.length() - 11)
-                    .replace("<name>", "")
-                    .replace("</name>", "")
-                    .split("</ch>");
-            for (int i = 0; i < channels.length; i++)
-                channels[i] = channels[i].substring(channels[i].indexOf(">") + 1);
-
-            switch (dataForm){
+            switch (data.getDataForm()){
                 case 0:{
-                    readDataFormZero(in);
+                    readDataFormZero(in, data);
                    break;
                 }
                 default:{
@@ -61,9 +54,11 @@ public class DataFileReader {
             e.printStackTrace();
         }
 
+        return data;
+
     }
 
-    private void readDataFormZero(LittleEndianDataInputStream in){
+    private void readDataFormZero(LittleEndianDataInputStream in, DataFile data){
 
     }
 
