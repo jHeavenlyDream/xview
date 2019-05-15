@@ -97,15 +97,12 @@ public class Main extends Application {
 			}
 		});
 
-
 	}
 
 	private void loadDataFile(File dataFile){
 		try {
 			DataFile data = new DataFileReader().load(dataFile);
 			channelList.setItems(FXCollections.observableArrayList(data.listChannels()));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		}catch (DataFormException e){
 			e.printStackTrace();
 		}catch (IOException e){

@@ -13,7 +13,7 @@ public class DataFileReader {
     public DataFileReader() {
     }
 
-    public DataFile load(File datafile) throws FileNotFoundException, IOException {
+    public DataFile load(File datafile) throws  IOException, DataFormException {
 
         DataFile data = new DataFile();
         LittleEndianDataInputStream in = new LittleEndianDataInputStream(new FileInputStream(datafile));
@@ -50,7 +50,13 @@ public class DataFileReader {
 
     }
 
-    private void readDataFormZero(LittleEndianDataInputStream in, DataFile data) {
+    private void readDataFormZero(LittleEndianDataInputStream in, DataFile data) throws IOException {
+        data.setColumnNum(in.readInt());
+        data.setTimeNum(in.readShort());
+
+        //read time
+
+
 
     }
 

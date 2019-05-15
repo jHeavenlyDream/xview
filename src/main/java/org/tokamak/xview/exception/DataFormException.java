@@ -1,10 +1,9 @@
 package org.tokamak.xview.exception;
 
-import java.io.IOException;
-
-public class DataFormException extends IOException {
+public class DataFormException extends Exception {
 
     public DataFormException() {
+        super();
     }
 
     @Override

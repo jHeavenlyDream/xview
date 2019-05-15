@@ -1,17 +1,40 @@
 package org.tokamak.xview;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class DataFile {
 
+    @Getter @Setter
     private String sign;
+    @Getter @Setter
     private int headLength;
+    @Getter @Setter
     private int dataLength;
+    @Getter @Setter
     private byte dataForm;
+    @Getter @Setter
     private byte dataType;
+    @Getter @Setter
     private int shotNumber;
+    @Getter @Setter
     private int shotDate;
+    @Getter @Setter
     private int shotTime;
+    @Getter @Setter
     private String addon;
+    @Getter @Setter
     private String comment;
+    @Getter @Setter
+    private int columnNum;
+    @Getter @Setter
+    private short timeNum;
+    @Getter @Setter
+    private long timeBegin;
+    @Getter @Setter
+    private long timeEnd;
+    @Getter @Setter
+    private long timeDelta;
 
     public DataFile() {
     }
@@ -28,83 +51,4 @@ public class DataFile {
         return channels;
     }
 
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public int getHeadLength() {
-        return headLength;
-    }
-
-    public void setHeadLength(int headLength) {
-        this.headLength = headLength;
-    }
-
-    public int getDataLength() {
-        return dataLength;
-    }
-
-    public void setDataLength(int dataLength) {
-        this.dataLength = dataLength;
-    }
-
-    public byte getDataForm() {
-        return dataForm;
-    }
-
-    public void setDataForm(byte dataForm) {
-        this.dataForm = dataForm;
-    }
-
-    public byte getDataType() {
-        return dataType;
-    }
-
-    public void setDataType(byte dataType) {
-        this.dataType = dataType;
-    }
-
-    public int getShotNumber() {
-        return shotNumber;
-    }
-
-    public void setShotNumber(int shotNumber) {
-        this.shotNumber = shotNumber;
-    }
-
-    public int getShotDate() {
-        return shotDate;
-    }
-
-    public void setShotDate(int shotDate) {
-        this.shotDate = shotDate;
-    }
-
-    public int getShotTime() {
-        return shotTime;
-    }
-
-    public void setShotTime(int shotTime) {
-        this.shotTime = shotTime;
-    }
-
-    public String getAddon() {
-        return addon;
-    }
-
-    public void setAddon(String addon) {
-        this.addon = addon;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 }
