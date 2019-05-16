@@ -2,6 +2,7 @@ package org.tokamak.xview;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jfree.data.xy.XYDataset;
 
 public class DataFile {
 
@@ -35,6 +36,8 @@ public class DataFile {
     private long timeEnd;
     @Getter @Setter
     private long timeDelta;
+    @Getter @Setter
+    private XYDataset xyDataset;
 
     public DataFile() {
     }
@@ -49,6 +52,10 @@ public class DataFile {
         }
 
         return channels;
+    }
+
+    public String getVersionFile(){
+        return sign.substring(10, 16);
     }
 
 }

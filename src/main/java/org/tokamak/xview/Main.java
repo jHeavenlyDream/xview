@@ -23,8 +23,10 @@ import java.io.IOException;
 public class Main extends Application {
 
 	private ListView<String> channelList;
+	private JFreeChart chart;
+	private XYDataset dataset;
 
-    public static void main(String[] args) { 
+	public static void main(String[] args) {
     	launch(args);
     }
 
@@ -69,8 +71,8 @@ public class Main extends Application {
 		controlPane.getChildren().addAll(label, channelList);
 
 		//center
-		XYDataset dataset = new XYSeriesCollection();
-		JFreeChart chart = ChartFactory.createXYLineChart(
+		dataset = new XYSeriesCollection();
+		chart = ChartFactory.createXYLineChart(
 				"channel",
 				"time",
 				"I",
@@ -103,6 +105,11 @@ public class Main extends Application {
 		try {
 			DataFile data = new DataFileReader().load(dataFile);
 			channelList.setItems(FXCollections.observableArrayList(data.listChannels()));
+			chart = ChartFactory.createXYLineChart(
+					"channel",
+					"time",
+					"I",
+					data.getXyDataset());
 		}catch (DataFormException e){
 			e.printStackTrace();
 		}catch (IOException e){
