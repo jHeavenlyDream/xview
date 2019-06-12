@@ -1,8 +1,9 @@
 package org.tokamak.xview;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -16,15 +17,15 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.tokamak.xview.exception.DataFormException;
 
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main extends Application {
 
 	private ListView<String> channelList;
 	private JFreeChart chart;
-	private XYDataset dataset;
+	private DataFile data;
 
 	public static void main(String[] args) {
     	launch(args);
@@ -71,12 +72,11 @@ public class Main extends Application {
 		controlPane.getChildren().addAll(label, channelList);
 
 		//center
-		dataset = new XYSeriesCollection();
 		chart = ChartFactory.createXYLineChart(
 				"channel",
 				"time",
 				"I",
-				dataset);
+				null);
 
 		ChartViewer viewer = new ChartViewer(chart);
 
@@ -99,23 +99,31 @@ public class Main extends Application {
 			}
 		});
 
+		channelList.getSelectionModel().selectedItemProperty()
+				.addListener((changed, oldVal, newVal) -> showChannel());
+
 	}
 
 	private void loadDataFile(File dataFile){
 		try {
-			DataFile data = new DataFileReader().load(dataFile);
+			data = new DataFileReader().load(dataFile);
 			channelList.setItems(FXCollections.observableArrayList(data.listChannels()));
-			chart = ChartFactory.createXYLineChart(
-					"channel",
-					"time",
-					"I",
-					data.getXyDataset());
+			chart.getXYPlot().setDataset(data.getXyDataset());
 		}catch (DataFormException e){
 			e.printStackTrace();
 		}catch (IOException e){
 			e.printStackTrace();
 		}
 
+	}
+
+	private void showChannel(){
+		for (int i = 0; i < data.getXyDataset().getSeriesCount(); i++)
+			chart.getXYPlot().getRenderer().setSeriesVisible(i,false);
+
+
+		chart.getXYPlot().getRenderer()
+				.setSeriesVisible(channelList.getSelectionModel().getSelectedIndex(),true);
 	}
 
 }
