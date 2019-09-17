@@ -7,7 +7,6 @@ import org.tokamak.xview.exception.DataFormException;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class DataFileReader {
@@ -85,7 +84,6 @@ public class DataFileReader {
         }
 
         //read data
-        System.out.println("Row:" + rows);
         XYSeriesCollection seriesCollection =  new XYSeriesCollection();
         if(data.getDataType() == 6){
             for (int i = 0; i < data.getColumnNum(); i++) {
@@ -94,12 +92,8 @@ public class DataFileReader {
                     series.add(j, in.readFloat() + exp);
                 }
                 seriesCollection.addSeries(series);
-
             }
             data.setXyDataset(seriesCollection);
         }
-
-        System.out.println("END READ");
     }
-
 }

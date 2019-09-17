@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jfree.data.xy.XYDataset;
 
-import java.util.List;
-
 public class DataFile {
 
     @Getter @Setter

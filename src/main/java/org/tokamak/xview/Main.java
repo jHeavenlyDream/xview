@@ -120,8 +120,6 @@ public class Main extends Application {
 	private void showChannel(){
 		for (int i = 0; i < data.getXyDataset().getSeriesCount(); i++)
 			chart.getXYPlot().getRenderer().setSeriesVisible(i,false);
-
-
 		chart.getXYPlot().getRenderer()
 				.setSeriesVisible(channelList.getSelectionModel().getSelectedIndex(),true);
 	}
